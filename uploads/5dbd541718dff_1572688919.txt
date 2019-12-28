@@ -1,0 +1,37 @@
+$employee='';
+            $employee_array = $this->input->post('employee');
+            if(isset($employee_array)){
+                $employee = implode(',', $employee_array);
+            }
+
+
+            addstorefunction--
+               $classification = $this->input->post('project_type1');
+
+
+
+                $(function() {
+        $("#end_date").datepicker({});
+        $("#set_update").datepicker({dateFormat: 'mm/dd/yyyy'});
+
+        $("#start_date").datepicker({
+           // dateFormat: 'mm/dd/yyyy',
+
+            onSelect: function(selected) {
+                var dt = new Date(selected);
+                $("#end_date").datepicker("option", "minDate", dt);
+                $("#set_update").datepicker("option", "maxDate", dt);
+            }
+
+            $('.date').datepicker({
+					 'todayHighlight':true,
+					// minDate: 0
+       });
+        var date = new Date();
+        date = date.toString('MM/dd/yyyy');
+             $("#start_date").val(date);
+             $("#set_update").val(date);
+
+
+
+        });
