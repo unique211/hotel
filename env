@@ -3,7 +3,7 @@ APP_ENV=local
 APP_KEY=base64:fHnkSfIj2WvwX2zQz7y0ntBji4Q2lbhWpAO5VTjM7lk=
 APP_DEBUG=true
 #APP_URL=http://localhost
-APP_URL=https://erp-hotel.herokuapp.com/
+APP_URL=http://erp-hotel.herokuapp.com/
 
 
 
