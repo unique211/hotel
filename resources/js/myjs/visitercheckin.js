@@ -370,50 +370,135 @@ $(document).ready(function() {
         var docid = '';
         var id = $('#saveid').val();
         var name = $('#name').val();
-
-        if (id == "") {
-            $.ajax({
-                url: inserturl,
-                method: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                dataType: "json",
-                success: function(data) {
-
-                    docid = data;
-
-                    if (data == '0') {
-                        swal({
-                            title: "Mobile NO Already Exist",
-                            text: "Please Enter Another Mobile No !!",
-                            type: "warning",
-                        });
-                    } else {
-                        if (data > 0) {
-                            $('#saveid1').val(docid);
+        var mobileno = $('#mobileno').val();
+        if (mobileno.length == 10) {
 
 
-                            // var r1 = $('table#docupload').find('tbody').find('tr');
-                            // var r = r1.length;
-                            // var tr = "";
+            if (id == "") {
+                $.ajax({
+                    url: inserturl,
+                    method: "POST",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function(data) {
 
-                            // for (var i = 0; i < r; i++) {
+                        docid = data;
+
+                        if (data == '0') {
+                            swal({
+                                title: "Mobile NO Already Exist",
+                                text: "Please Enter Another Mobile No !!",
+                                type: "warning",
+                            });
+                        } else {
+                            if (data > 0) {
+                                $('#saveid1').val(docid);
+
+
+                                // var r1 = $('table#docupload').find('tbody').find('tr');
+                                // var r = r1.length;
+                                // var tr = "";
+
+                                // for (var i = 0; i < r; i++) {
+                                $('.proffinfodata').each(function() {
+                                    var id1 = $(this).attr('id');
+                                    id1 = id1.split("_");
+
+                                    var doctype = $('#profdoc_' + id1[1]).val();
+                                    var profdocno = $('#proffno_' + id1[1]).val();
+                                    var filename = $('#filehidden_' + id1[1]).val();
+
+                                    if (doctype != "") {
+
+                                        // var t = document.getElementById('docupload');
+                                        // var doctype = $(r1[i]).find('td:eq(1)').html();
+                                        // var profdocno = $(r1[i]).find('td:eq(3)').html();
+                                        // var filename = $(r1[i]).find('td:eq(4)').html();
+                                        var form_data = new FormData();
+                                        form_data.append('doctype', doctype);
+                                        form_data.append('docid', docid);
+                                        form_data.append('filename', filename);
+                                        form_data.append('profdocno', profdocno);
+                                        form_data.append('_token', token);
+
+                                        $.ajax({
+
+
+                                            type: "POST",
+                                            url: docuploadurl,
+                                            dataType: "JSON",
+                                            async: false,
+                                            data: form_data,
+                                            contentType: false,
+                                            cache: false,
+                                            processData: false,
+                                            dataType: "json",
+                                            success: function(data) {
+
+
+
+                                            }
+
+
+
+                                        });
+                                    }
+                                });
+                                $("#tab1").prop('disabled', false);
+                                $("#tab2").prop('disabled', false);
+                                $("#tab2").trigger('click');
+                                successTost("Operation Successfull");
+                            }
+                        }
+
+                    }
+                });
+            } else {
+
+                docid = $('#saveid').val();
+
+                $.ajax({
+                    url: updateurl,
+                    method: "POST",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function(data) {
+
+
+
+                        if (data == '0') {
+                            swal({
+                                title: "Mobile NO Already Exist",
+                                text: "Please Enter Another Mobile No !!",
+                                type: "warning",
+                            });
+                        } else {
+
+                            $.ajax({
+                                url: "docuploaddata/destroy/" + docid,
+                                beforeSend: function() {
+
+                                },
+                                success: function(data) {
+
+                                }
+                            });
+
                             $('.proffinfodata').each(function() {
                                 var id1 = $(this).attr('id');
                                 id1 = id1.split("_");
 
+
                                 var doctype = $('#profdoc_' + id1[1]).val();
                                 var profdocno = $('#proffno_' + id1[1]).val();
                                 var filename = $('#filehidden_' + id1[1]).val();
-
                                 if (doctype != "") {
-
-                                    // var t = document.getElementById('docupload');
-                                    // var doctype = $(r1[i]).find('td:eq(1)').html();
-                                    // var profdocno = $(r1[i]).find('td:eq(3)').html();
-                                    // var filename = $(r1[i]).find('td:eq(4)').html();
                                     var form_data = new FormData();
                                     form_data.append('doctype', doctype);
                                     form_data.append('docid', docid);
@@ -444,106 +529,31 @@ $(document).ready(function() {
                                     });
                                 }
                             });
+                            toastr.success("Record Update Success Fully");
                             $("#tab1").prop('disabled', false);
                             $("#tab2").prop('disabled', false);
                             $("#tab2").trigger('click');
-                            successTost("Operation Successfull");
                         }
-                    }
 
-                }
-            });
+                    }
+                });
+
+                // var r1 = $('table#docupload').find('tbody').find('tr');
+                // var r = r1.length;
+                // var tr = "";
+
+
+            }
+
+
+            forgetadvanceroom();
         } else {
-
-            docid = $('#saveid').val();
-
-            $.ajax({
-                url: updateurl,
-                method: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                dataType: "json",
-                success: function(data) {
-
-
-
-                    if (data == '0') {
-                        swal({
-                            title: "Mobile NO Already Exist",
-                            text: "Please Enter Another Mobile No !!",
-                            type: "warning",
-                        });
-                    } else {
-
-                        $.ajax({
-                            url: "docuploaddata/destroy/" + docid,
-                            beforeSend: function() {
-
-                            },
-                            success: function(data) {
-
-                            }
-                        });
-
-                        $('.proffinfodata').each(function() {
-                            var id1 = $(this).attr('id');
-                            id1 = id1.split("_");
-
-
-                            var doctype = $('#profdoc_' + id1[1]).val();
-                            var profdocno = $('#proffno_' + id1[1]).val();
-                            var filename = $('#filehidden_' + id1[1]).val();
-                            if (doctype != "") {
-                                var form_data = new FormData();
-                                form_data.append('doctype', doctype);
-                                form_data.append('docid', docid);
-                                form_data.append('filename', filename);
-                                form_data.append('profdocno', profdocno);
-                                form_data.append('_token', token);
-
-                                $.ajax({
-
-
-                                    type: "POST",
-                                    url: docuploadurl,
-                                    dataType: "JSON",
-                                    async: false,
-                                    data: form_data,
-                                    contentType: false,
-                                    cache: false,
-                                    processData: false,
-                                    dataType: "json",
-                                    success: function(data) {
-
-
-
-                                    }
-
-
-
-                                });
-                            }
-                        });
-                        toastr.success("Record Update Success Fully");
-                        $("#tab1").prop('disabled', false);
-                        $("#tab2").prop('disabled', false);
-                        $("#tab2").trigger('click');
-                    }
-
-                }
+            swal({
+                title: "Opss...",
+                text: "Please Enter 10 digits!",
+                type: "warning",
             });
-
-            // var r1 = $('table#docupload').find('tbody').find('tr');
-            // var r = r1.length;
-            // var tr = "";
-
-
         }
-
-
-        forgetadvanceroom();
 
 
         $('#searchvisitor').val('')
@@ -1142,7 +1152,7 @@ $(document).ready(function() {
             });
             var date = new Date();
             var tomorrow = new Date(date.getTime() + noofday * 24 * 60 * 60 * 1000);
-            tomorrow = tomorrow.toString('dd/MM/yyyy hh:mm:ss');
+            tomorrow = tomorrow.toString('dd/MM/yyyy HH:mm:ss');
             $("#date").val(tomorrow);
         }
 
@@ -1465,7 +1475,7 @@ $(document).ready(function() {
         var checktime = $('#checktime').val();
         var cheout = $('#date').val();
 
-        if (Date.parse(checktime) <= Date.parse(cheout)) {
+        if (checktime <= cheout) {
 
             var checktime1 = checktime.split(' ');
             var cheout1 = cheout.split(' ');

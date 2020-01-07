@@ -22,11 +22,11 @@ use Illuminate\Http\Request;
 
 
 
-Route::get('dashboard', function () {
-    // return view('welcome');
-    return view('dashboard');
-    //   return view('login');
-});
+// Route::get('dashboard', function () {
+//     // return view('welcome');
+//     return view('dashboard');
+//     //   return view('login');
+// });
 
 Route::resource('user_manage', 'UserController');
 Route::get('get_all', 'UserController@get_users');
@@ -262,6 +262,14 @@ Route::get('getcheckoutscreen/{checkinid}', 'Visitercheckincontroller@getcheckou
 Route::get('vistorcheckininfo/{checkinid}', 'Visitercheckincontroller@getvischeckinginformation');
 Route::get('updatestatus/{checkinid}', 'Visitercheckincontroller@checkinupdatestatus');
 Route::post('roomwiseservices', 'Visiterchecoutcontroller@roomwiseservices');
+
+
+//for getting dashboard
+
+Route::get('gettodaycountofall', 'Dashboardcontroller@getdashboarddata');
+Route::get('dashboard', 'Dashboardcontroller@index');
+
+
 
 
 

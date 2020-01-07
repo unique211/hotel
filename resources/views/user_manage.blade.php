@@ -54,7 +54,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody id="tablebody">
-                                                    </tbody>        		
+                                                    </tbody>
                                                 </table>
                                     </div>
                                 </div>
@@ -94,7 +94,7 @@
                                                     <label>@lang('user.mobileno')*</label>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                        <input type="number" class="form-control" id="mobileno" name="mobileno" style="text-align:right;" placeholder="@lang('user.mobileno')" required>
+                                                        <input type="number" maxlength="10" pattern="[1-9]{1}[0-9]{9}" class="form-control" id="mobileno" name="mobileno" style="text-align:right;" placeholder="@lang('user.mobileno')" required>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -140,7 +140,7 @@
                                                     <label>@lang('user.password')*</label>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                        <input type="password" class="form-control input-sm placeholdesize" id="password" name="password" placeholder="@lang('user.password')"   required  maxlength="36"  >
+                                                        <input type="password" class="form-control input-sm placeholdesize cpassword" id="password" name="password" placeholder="@lang('user.password')"   required  maxlength="36"  >
                                                     <input type="hidden" id="hide_password" name="hide_password"
                                                         value="">
                                                 </div>
@@ -148,9 +148,9 @@
                                                     <label>@lang('user.confirmpassword')*</label>
                                                 </div>
                                                 <div class="col-sm-2">
-                                                        <input type="password" class="form-control input-sm placeholdesize" id="cpassword" name="cpassword" placeholder="@lang('user.confirmpassword')"  required   maxlength="36"  >
+                                                        <input type="password" class="form-control input-sm placeholdesize cpassword" id="cpassword" name="cpassword" placeholder="@lang('user.confirmpassword')"  required   maxlength="36"  >
                                                         <label class="text-danger" id="cpass_error"></label>
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -196,7 +196,7 @@
         });
 
     });
-   
+
     </script>
     <script language="JavaScript" type="text/javascript">
         var inserturl="{{route('usermanagement.store') }}";
@@ -206,7 +206,7 @@
         var checkmobileno="{{url ('checkusermobileno') }}";
         varuser="<?php echo$val=Session::get('userid');?>";
         var checkemailaddress="{{url ('checkexistemail')}}";
-        
+
         </script>
 
     <script type='text/javascript' src="{{ URL::asset('/resources/js/myjs/usermanagement.js') }}">

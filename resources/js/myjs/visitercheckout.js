@@ -587,7 +587,7 @@ $(document).ready(function() {
                         var visterid = $('#visiterid').val();
 
                         if (roomid != "checkall") {
-                            
+
                             console.log("roomid" + roomid + "visterid" + visterid + "checkoutid" + checkoutid);
 
                             $.ajax({
@@ -637,7 +637,7 @@ $(document).ready(function() {
                     });
                     // }
                     successTost("Record Save Success Fully");
-                    datashow();
+                    //datashow();
                     $('#saveid').val('');
 
                     location.href = imgurl + "/visitercheckin";
@@ -645,8 +645,8 @@ $(document).ready(function() {
 
             });
         }
-        $('.formhideshow').hide();
-        $('.tablehideshow').show();
+        // $('.formhideshow').hide();
+        // $('.tablehideshow').show();
 
 
     });
@@ -940,7 +940,7 @@ $(document).ready(function() {
     });
 
     function getdiffrentdate(checktime, cheout) {
-      
+
         console.log(checktime + "" + cheout);
         if (Date.parse(checktime) < Date.parse(cheout)) {
 
