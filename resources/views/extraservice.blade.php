@@ -40,7 +40,7 @@
                             <div class="panel-body">
                                 <div class="col-lg-12 ">
                                     <div class="table-responsive" id="show_master">
-											<table id="categorytb" class="table table-striped table-bordered" style="width:100%">
+											<table id="usertb" class="table table-striped table-bordered" style="width:100%">
 													<thead>
 														<tr>
 															<th width="10%">@lang('extraservicedata.srno')</th>

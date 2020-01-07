@@ -170,6 +170,7 @@ $(document).ready(function() {
                             $("#searchtbody").append(html);
                         }
 
+
                     } else {
                         $("#searchtbody").html('');
                     }
