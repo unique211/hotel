@@ -225,7 +225,7 @@ $(document).ready(function() {
     function from_clear() {
         $('#servicename').val('');
         $('#unit').val('');
-        $('#rate').val('');
+        $('#rate').val(0);
         $('#btn_submit').text('Save');
     }
 
