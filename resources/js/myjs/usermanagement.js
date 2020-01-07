@@ -22,17 +22,17 @@ $(document).ready(function() {
     });
 
 
-    $(document).on("blur", "#cpassword", function(e) {
+    $(document).on("blur", ".cpassword", function(e) {
         e.preventDefault();
         var msg = '';
         var p = $('#password').val();
         var cp = $('#cpassword').val();
         if (p != cp) {
             msg = 'confirm does not match';
-            $('#submitbtn').attr('disabled', 'disabled');
+            $('#btn_submit').attr('disabled', 'disabled');
         } else {
             msg = '';
-            $('#submitbtn').removeAttr('disabled');
+            $('#btn_submit').removeAttr('disabled');
         }
         $('#cpass_error').html(msg);
     });
@@ -42,44 +42,62 @@ $(document).ready(function() {
         var uid = '';
 
         var id = $('#saveid').val();
+        var checkpassword = 0;
+        var p = $('#password').val();
+        var cp = $('#cpassword').val();
+        var m = $('#mobileno').val();
+        if (p != cp) {
+            msg = 'confirm does not match';
 
-        // if (validate == 1) {
+        } else {
+            msg = '';
 
-        $.ajax({
-            url: inserturl,
-            method: "POST",
-            data: new FormData(this),
-            contentType: false,
-            cache: false,
-            processData: false,
-            dataType: "json",
-            success: function(data) {
+        }
 
-                if (data == '100') {
-                    swal({
-                        title: "Mobile NO  OR Email Already Exist  !",
-                        text: "Please Enter Another Mobile No OR Email !!",
-                        type: "warning",
-                    });
-                } else if (data == '101') {
-                    swal({
-                        title: "Userid Already Exist  !",
-                        text: "Please Enter Another Userid !!",
-                        type: "warning",
-                    });
-                } else {
-                    datashow();
-                    toastr.success("Record save Success Fully");
-                    $('.tablehideshow').show();
-                    $(".formhideshow").hide();
-                    $('#saveid').val('');
-                    form_clear();
+        if (m.length == 10) {
+
+            $.ajax({
+                url: inserturl,
+                method: "POST",
+                data: new FormData(this),
+                contentType: false,
+                cache: false,
+                processData: false,
+                dataType: "json",
+                success: function(data) {
+
+                    if (data == '100') {
+                        swal({
+                            title: "Mobile NO  OR Email Already Exist  !",
+                            text: "Please Enter Another Mobile No OR Email !!",
+                            type: "warning",
+                        });
+                    } else if (data == '101') {
+                        swal({
+                            title: "Userid Already Exist  !",
+                            text: "Please Enter Another Userid !!",
+                            type: "warning",
+                        });
+                    } else {
+                        datashow();
+                        toastr.success("Record save Success Fully");
+                        $('.tablehideshow').show();
+                        $(".formhideshow").hide();
+                        $('#saveid').val('');
+                        form_clear();
+                    }
+
+
                 }
 
-
-            }
-
-        });
+            });
+        } else {
+            swal({
+                title: "Opss...",
+                text: "Please Enter 10 digits!",
+                type: "warning",
+            });
+        }
 
 
 

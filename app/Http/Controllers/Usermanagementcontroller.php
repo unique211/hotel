@@ -26,7 +26,7 @@ class Usermanagementcontroller extends Controller
 
 
         if($ID >0){
-            $data = DB::table('user_management')->where('mobileno',$request->mobileno)->where('id','!=',$ID)->get();
+            $data = DB::table('user_management')->where('mobileno',$request->mobileno)->orWhere('email', '=',$request->email)->where('id','!=',$ID)->get();
             $count=$data->count();
             if($count >0){
                 return '100';
@@ -45,32 +45,32 @@ class Usermanagementcontroller extends Controller
                         'email'        =>   $request->email,
                         'mobileno'        =>   $request->mobileno,
                         'role'        =>   $request->user_type,
-                       
-        
+
+
                     ]
-        
+
                 );
                 $ref_id = $customer->id;
                 $customer2   =   Loginmastermodel::updateOrCreate(
                     ['uid' => $ref_id],
                     [
-        
+
                         'role'        =>   $request->user_type,
                         'userid'        =>   $request->user_id,
                         'password'        =>   $request->password,
-        
+
                     ]
-        
+
                 );
                 //   return $customer->id;
-        
+
                 //   dd($dob);
                 return Response::json($customer);
             }
             }
         }else{
 
-            $data = DB::table('user_management')->where('mobileno',$request->mobileno)->get();
+            $data = DB::table('user_management')->where('mobileno',$request->mobileno)->orWhere('email', '=',$request->email)->get();
             $count=$data->count();
             if($count >0){
                 return '100';
@@ -88,35 +88,35 @@ class Usermanagementcontroller extends Controller
                             'email'        =>   $request->email,
                             'mobileno'        =>   $request->mobileno,
                             'role'        =>   $request->user_type,
-                           
-            
+
+
                         ]
-            
+
                     );
                     $ref_id = $customer->id;
                     $customer2   =   Loginmastermodel::updateOrCreate(
                         ['uid' => $ref_id],
                         [
-            
+
                             'role'        =>   $request->user_type,
                             'userid'        =>   $request->user_id,
                             'password'        =>   $request->password,
-            
+
                         ]
-            
+
                     );
                     //   return $customer->id;
-            
+
                     //   dd($dob);
                     return Response::json($customer);//last changes
                 }
 
-                
+
             }
-           
+
         }
-        
-      
+
+
     }
     public function alluser(){
         $data = DB::table('user_management')
@@ -142,7 +142,7 @@ class Usermanagementcontroller extends Controller
 
     $data1 = Loginmastermodel::where('uid',$id);
         $data1->delete();
-    return response()->json($data); 
+    return response()->json($data);
 }
 public function checklogin($userid,$password){
 
@@ -162,13 +162,13 @@ public function checklogin($userid,$password){
             $password= $data1->password;
             $username='';
             $mobileno='';
-    
+
             $userdata = DB::table('user_management')->where('id',$uid)->get();
             foreach($userdata as $usermanage){
                 $username=$usermanage->username;
                 $mobileno=$usermanage->mobileno;
-    
-               
+
+
             }
             Session::put('username',$username);
             Session::put('userid',$uid);
@@ -181,32 +181,32 @@ public function checklogin($userid,$password){
     }else{
         return  response()->json(0);
     }
-  
-    
-    
+
+
+
 }
 public function checkusermobile($mobile){
     $data= DB::table('user_management')->where('mobileno',$mobile)->get();
   $count=count($data);
-  
+
   return response()->json($count);
 }
 public function editcheckusermobile($mobile,$id){
     $data= DB::table('user_management')->where('mobileno',$mobile)->where('id',$id)->get();
     $count=count($data);
-    
+
     return response()->json($count);
 }
 public function checkexistemail($email){
     $data= DB::table('user_management')->where('email',$email)->get();
   $count=count($data);
-  
+
   return response()->json($count);
 }
 public function editcheckexistemail($email,$id){
     $data= DB::table('user_management')->where('email',$email)->where('id',$id)->get();
     $count=count($data);
-    
+
     return response()->json($count);
 }
 

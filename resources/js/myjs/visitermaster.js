@@ -30,148 +30,166 @@ $(document).ready(function() {
         event.preventDefault();
         var docid = '';
         var id = $('#saveid').val();
+        var mobileno = $('#mobileno').val();
+        if (mobileno.length == 10) {
+            if (id == "") {
+                $.ajax({
+                    url: inserturl,
+                    method: "POST",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function(data) {
 
-        if (id == "") {
-            $.ajax({
-                url: inserturl,
-                method: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                dataType: "json",
-                success: function(data) {
-
-                    docid = data;
-                    successTost("Operation Successfull");
-
-                    var r1 = $('table#docupload').find('tbody').find('tr');
-                    var r = r1.length;
-                    var tr = "";
-
-                    $('.proffinfodata').each(function() {
-                        var id1 = $(this).attr('id');
-                        id1 = id1.split("_");
-
-                        var doctype = $('#profdoc_' + id1[1]).val();
-                        var profdocno = $('#proffno_' + id1[1]).val();
-                        var filename = $('#filehidden_' + id1[1]).val();
-
-                        if (doctype != "") {
-
-
-                            var form_data = new FormData();
-                            form_data.append('doctype', doctype);
-                            form_data.append('docid', docid);
-                            form_data.append('filename', filename);
-                            form_data.append('profdocno', profdocno);
-                            form_data.append('_token', doc_token);
-
-                            $.ajax({
-
-
-                                type: "POST",
-                                url: docuploadurl,
-                                dataType: "JSON",
-                                async: false,
-                                data: form_data,
-                                contentType: false,
-                                cache: false,
-                                processData: false,
-                                dataType: "json",
-                                success: function(data) {
-
-
-
-                                }
-
-
-
+                        docid = data;
+                        if (data == '0') {
+                            swal({
+                                title: "Mobile NO Already Exist",
+                                text: "Please Enter Another Mobile No !!",
+                                type: "warning",
                             });
+                        } else {
+
+                            successTost("Operation Successfull");
+
+                            var r1 = $('table#docupload').find('tbody').find('tr');
+                            var r = r1.length;
+                            var tr = "";
+
+                            $('.proffinfodata').each(function() {
+                                var id1 = $(this).attr('id');
+                                id1 = id1.split("_");
+
+                                var doctype = $('#profdoc_' + id1[1]).val();
+                                var profdocno = $('#proffno_' + id1[1]).val();
+                                var filename = $('#filehidden_' + id1[1]).val();
+
+                                if (doctype != "") {
+
+
+                                    var form_data = new FormData();
+                                    form_data.append('doctype', doctype);
+                                    form_data.append('docid', docid);
+                                    form_data.append('filename', filename);
+                                    form_data.append('profdocno', profdocno);
+                                    form_data.append('_token', doc_token);
+
+                                    $.ajax({
+
+
+                                        type: "POST",
+                                        url: docuploadurl,
+                                        dataType: "JSON",
+                                        async: false,
+                                        data: form_data,
+                                        contentType: false,
+                                        cache: false,
+                                        processData: false,
+                                        dataType: "json",
+                                        success: function(data) {
+
+
+
+                                        }
+
+
+
+                                    });
+                                }
+                            });
+                            datashow();
                         }
-                    });
-                    datashow();
-                }
-            });
-        } else {
+                    }
+                });
+            } else {
 
-            docid = $('#saveid').val();
-            $.ajax({
-                url: "docuploaddata/destroy/" + docid,
-                beforeSend: function() {
+                docid = $('#saveid').val();
+                $.ajax({
+                    url: "docuploaddata/destroy/" + docid,
+                    beforeSend: function() {
 
-                },
-                success: function(data) {
+                    },
+                    success: function(data) {
 
-                }
-            })
-            $.ajax({
-                url: updateurl,
-                method: "POST",
-                data: new FormData(this),
-                contentType: false,
-                cache: false,
-                processData: false,
-                dataType: "json",
-                success: function(data) {
+                    }
+                })
+                $.ajax({
+                    url: updateurl,
+                    method: "POST",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function(data) {
 
-                    // toastr.success("Record Update Success Fully");
-
-                }
-            });
-
-            $('.proffinfodata').each(function() {
-                var id1 = $(this).attr('id');
-                id1 = id1.split("_");
+                        // toastr.success("Record Update Success Fully");
 
 
 
-                var doctype = $('#profdoc_' + id1[1]).val();
-                var profdocno = $('#proffno_' + id1[1]).val();
-                var filename = $('#filehidden_' + id1[1]).val();
-                if (doctype != "") {
-                    var form_data = new FormData();
-                    form_data.append('doctype', doctype);
-                    form_data.append('docid', docid);
-                    form_data.append('filename', filename);
-                    form_data.append('profdocno', profdocno);
-                    form_data.append('_token', doc_token);
-
-                    $.ajax({
-
-
-                        type: "POST",
-                        url: docuploadurl,
-                        dataType: "JSON",
-                        async: false,
-                        data: form_data,
-                        contentType: false,
-                        cache: false,
-                        processData: false,
-                        dataType: "json",
-                        success: function(data) {
+                        $('.proffinfodata').each(function() {
+                            var id1 = $(this).attr('id');
+                            id1 = id1.split("_");
 
 
 
-                        }
+                            var doctype = $('#profdoc_' + id1[1]).val();
+                            var profdocno = $('#proffno_' + id1[1]).val();
+                            var filename = $('#filehidden_' + id1[1]).val();
+                            if (doctype != "") {
+                                var form_data = new FormData();
+                                form_data.append('doctype', doctype);
+                                form_data.append('docid', docid);
+                                form_data.append('filename', filename);
+                                form_data.append('profdocno', profdocno);
+                                form_data.append('_token', doc_token);
+
+                                $.ajax({
+
+
+                                    type: "POST",
+                                    url: docuploadurl,
+                                    dataType: "JSON",
+                                    async: false,
+                                    data: form_data,
+                                    contentType: false,
+                                    cache: false,
+                                    processData: false,
+                                    dataType: "json",
+                                    success: function(data) {
 
 
 
-                    });
-                }
-            });
+                                    }
+
+
+
+                                });
+                            }
+                        });
+                    }
+                });
+                datashow();
+                toastr.success("Record Update Success Fully");
+            }
+
+
+
+
+
+            $('.tablehideshow').show();
+            $(".formhideshow").hide();
             datashow();
-            toastr.success("Record Update Success Fully");
+            $('#saveid').val('');
+        } else {
+            swal({
+                title: "Opss...",
+                text: "Please Enter 10 digits!",
+                type: "warning",
+            });
         }
-
-
-
-
-
-        $('.tablehideshow').show();
-        $(".formhideshow").hide();
-        datashow();
-        $('#saveid').val('');
 
     });
 
